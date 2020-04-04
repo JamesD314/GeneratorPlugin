@@ -30,7 +30,7 @@ public class Events implements Listener{
 		if(e.getItemInHand().hasItemMeta() && e.getItemInHand().getItemMeta().hasLore()) {
 			List<String> lore = e.getItemInHand().getItemMeta().getLore();
 			if(ChatColor.stripColor(lore.get(0)).contains("Generator")) {
-				Main.getGeneratorManger().add(e.getBlock().getLocation(), e.getPlayer().getFacing().getOppositeFace().getDirection(), Integer.parseInt(lore.get(0).split(" ")[1]));
+				Main.getGeneratorManger().add(e.getBlock().getLocation(), e.getPlayer().getFacing().getOppositeFace().getDirection(), Integer.parseInt(ChatColor.stripColor(lore.get(0).split(" ")[1])));
 			}
 		}
 	}
@@ -41,6 +41,7 @@ public class Events implements Listener{
 			Main.getGeneratorManger().remove(e.getBlock());
 		}
 	}
+	
 	@EventHandler
 	public void onEntityExplosion(EntityExplodeEvent e){
 		for(int i = 0; i < e.blockList().size(); i++) {
