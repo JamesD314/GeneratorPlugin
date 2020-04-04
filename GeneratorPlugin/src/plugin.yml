@@ -1,0 +1,12 @@
+name: GeneratorPlugin
+author: ScienceMan
+version: 1.0
+main: me.ScienceMan.generatorplugin.Main
+description: Generator Plugin
+depend: [Vault]
+api-version: 1.15
+
+commands:
+  buygenerator:
+    usage: /<command> 
+    description: Allows player to purchase a Generator
