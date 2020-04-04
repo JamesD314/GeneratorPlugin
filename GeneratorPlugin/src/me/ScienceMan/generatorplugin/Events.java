@@ -1,4 +1,4 @@
-package me.ScienceMan.generatorplugin.events;
+package me.ScienceMan.generatorplugin;
 
 import java.util.List;
 
@@ -18,8 +18,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import me.ScienceMan.generatorplugin.Generator;
-import me.ScienceMan.generatorplugin.Main;
 import net.md_5.bungee.api.ChatColor;
 
 public class Events implements Listener{

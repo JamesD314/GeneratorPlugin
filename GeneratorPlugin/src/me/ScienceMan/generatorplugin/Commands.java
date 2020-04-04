@@ -20,15 +20,20 @@ public class Commands implements Listener, CommandExecutor{
 				if(sender instanceof Player) {
 					Player player = (Player)sender;
 					Double price = Main.getConfigs().getConfig("generator-pricing").getDouble("level1.price");
-					if(Main.getEconomy().has(player, price)) {
-						Main.getEconomy().withdrawPlayer(player, price);
-						ItemStack generator = new ItemStack(Material.FURNACE, 1);
-						generator.setItemMeta(Generator.getMeta(1));
-						player.getInventory().addItem(generator);
-						player.sendMessage(ChatColor.GREEN + "Congratulation on purchasing a new Generator!");
+					if(player.hasPermission("generator.buygenerator")) {
+						if(Main.getEconomy().has(player, price)) {
+							Main.getEconomy().withdrawPlayer(player, price);
+							ItemStack generator = new ItemStack(Material.FURNACE, 1);
+							generator.setItemMeta(Generator.getMeta(1));
+							player.getInventory().addItem(generator);
+							player.sendMessage(ChatColor.GREEN + "Congratulation on purchasing a new Generator!");
+						}
+						else {
+							player.sendMessage(ChatColor.RED + "Sorry, but you do not have sufficient funds to purchase a generator. It costs: " + price);
+						}
 					}
 					else {
-						player.sendMessage(ChatColor.RED + "Sorry, but you do not have sufficient funds to purchase a generator. It costs: " + price);
+						player.sendMessage(ChatColor.RED + "You do not have permission to run this command");
 					}
 				}
 				else{

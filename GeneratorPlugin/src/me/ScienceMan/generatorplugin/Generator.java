@@ -45,7 +45,7 @@ public class Generator {
 			materialString += " ";
 		}
 		meta.setLore(Arrays.asList(
-				ChatColor.WHITE + "Level " + l + " Generator",
+				ChatColor.WHITE + "Level " + ChatColor.GREEN + l + ChatColor.WHITE + " Generator",
 				ChatColor.WHITE + "Produces " + ChatColor.GOLD + "" + materialString.subSequence(0, materialString.length() - 1) + ChatColor.WHITE + " every " + ChatColor.GREEN + "" + config.getInt("level1.time") + ChatColor.WHITE + " seconds"));
 		return meta;
 	}
@@ -72,9 +72,9 @@ public class Generator {
 				materialString += " ";
 			}
 			upgradeMeta.setLore(Arrays.asList(
-					ChatColor.WHITE + "Upgrade to level " + (level + 1),
+					ChatColor.WHITE + "Upgrade to level " + ChatColor.GREEN + (level + 1),
 					ChatColor.WHITE + "Will produce " + ChatColor.GOLD + materialString.substring(0, materialString.length()-1) + ChatColor.WHITE + " every " + ChatColor.GREEN + config.getInt("level" + (level+1) + ".time") + ChatColor.WHITE + " seconds",
-					ChatColor.WHITE + "Costs $" + config.getInt("level"+ (level + 1) + ".price")));
+					ChatColor.WHITE + "Costs " + ChatColor.GREEN + "$" + config.getInt("level"+ (level + 1) + ".price")));
 			upgradeIs.setItemMeta(upgradeMeta);
 			
 			ItemStack[] items = {empty, empty, empty, currentIs, empty, upgradeIs, empty, empty, empty};

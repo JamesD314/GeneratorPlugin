@@ -3,7 +3,6 @@ package me.ScienceMan.generatorplugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.ScienceMan.generatorplugin.events.Events;
 import net.md_5.bungee.api.ChatColor;
 import net.milkbowl.vault.economy.Economy;
 
