@@ -30,7 +30,8 @@ public class Events implements Listener{
 		if(e.getItemInHand().hasItemMeta() && e.getItemInHand().getItemMeta().hasLore()) {
 			List<String> lore = e.getItemInHand().getItemMeta().getLore();
 			if(ChatColor.stripColor(lore.get(0)).contains("Generator")) {
-				Main.getGeneratorManger().add(e.getBlock().getLocation(), e.getPlayer().getFacing().getOppositeFace().getDirection(), Integer.parseInt(ChatColor.stripColor(lore.get(0).split(" ")[1])));
+				Main.getGeneratorManger().add(e.getBlock().getLocation(), e.getPlayer().getFacing().getOppositeFace().getDirection(),
+						Integer.parseInt(ChatColor.stripColor(lore.get(0).split(" ")[1])));
 			}
 		}
 	}
@@ -57,7 +58,7 @@ public class Events implements Listener{
 	@EventHandler
 	public void playerInteract(PlayerInteractEvent e) {
 		// If generator was right-clicked
-		if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !e.getPlayer().isSneaking() && Main.getGeneratorManger().getGenerators().contains(e.getClickedBlock().getLocation()) && e.getClickedBlock().getMetadata("generator").get(0).value() instanceof Generator){
+		if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !e.getPlayer().isSneaking() &&	Main.getGeneratorManger().getGenerators().contains(e.getClickedBlock().getLocation())){
 			e.setUseInteractedBlock(Result.DENY);
 			Generator g = (Generator)e.getClickedBlock().getMetadata("generator").get(0).value();
 			g.openUpgradeMenu(e.getPlayer());
@@ -68,7 +69,7 @@ public class Events implements Listener{
 	public void InvenClick(InventoryClickEvent e) {
 		if(e.getView().getTitle().equals(ChatColor.BLUE + "Generator Upgrade Menu")) {
 			e.setCancelled(true);
-			if(e.getCurrentItem() != null && e.getCurrentItem().hasItemMeta() && e.getCurrentItem().getItemMeta().hasDisplayName() && e.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.DARK_AQUA + "Upgrade Generator")) {
+			if(e.getCurrentItem() != null && e.getCurrentItem().hasItemMeta() && e.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.DARK_AQUA + "Upgrade Generator")) {
 				Location l = Main.getGeneratorManger().get(e.getClickedInventory());
 				if(l != null) {
 					Generator g = (Generator)l.getBlock().getMetadata("generator").get(0).value();

@@ -18,6 +18,9 @@ public class ConfigManager{
 	}
 	
 	public void loadConfig(String key) {
+		if(configs.containsKey(key))
+			configs.remove(key);
+		
 		if(key.endsWith(".yml"))
 			key = key.substring(0, key.length() - 4);
 		
@@ -66,17 +69,16 @@ public class ConfigManager{
 		}
 	}
 	
-	public boolean reloadConfig(String key) {
-		if(key.endsWith(".yml"))
-			key = key.substring(0, key.length() - 4);
-		if(configs.containsKey(key)) {
-			configs.replace(key, YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), key + ".yml")));
-			return true;
-		}
-		else {
-			plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Failed to save file due to nonexistant key in in me.ScienceMan.generatorplugin.ConfigManager.configs");
-			return false;
-		}
+	public void reloadConfigs() {
+		configs.forEach( (String key, YamlConfiguration c) -> {
+			if(key.endsWith(".yml"))
+				key = key.substring(0, key.length() - 4);
+			if(configs.containsKey(key)) {
+				configs.replace(key, YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), key + ".yml")));
+			}
+			else {
+				plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Failed to save file due to nonexistant key in in me.ScienceMan.generatorplugin.ConfigManager.configs");
+			}
+		});
 	}
-	
 }

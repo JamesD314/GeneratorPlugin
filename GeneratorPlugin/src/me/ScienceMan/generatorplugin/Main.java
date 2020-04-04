@@ -1,5 +1,6 @@
 package me.ScienceMan.generatorplugin;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,7 +24,7 @@ public class Main extends JavaPlugin{
 		
 		// Loads configs
 		configs = new ConfigManager(this);
-		configs.loadConfig("generator-pricing");
+		configs.loadConfig("pricing");
 		configs.loadConfig("generators");
 		
 		generators = new GeneratorManager(this);
@@ -62,11 +63,20 @@ public class Main extends JavaPlugin{
 		return economy;
 	}
 	
-	public static ConfigManager getConfigs() {
-		return configs;
+	public static YamlConfiguration getConfig(String key) {
+		return configs.getConfig(key);
 	}
 	
 	public static GeneratorManager getGeneratorManger() {
 		return generators;
+	}
+	
+	public static void saveConfig(String key) {
+		configs.saveConfig(key);
+	}
+	
+	public static void reloadConfigs() {
+		configs.reloadConfigs();
+		Main.getGeneratorManger().reload();
 	}
 }

@@ -10,3 +10,6 @@ commands:
   buygenerator:
     usage: /<command> 
     description: Allows player to purchase a Generator
+  reloadgenerators:
+    usage: /<command>
+    description: Reloads the configs and generators
