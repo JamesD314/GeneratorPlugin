@@ -19,13 +19,18 @@ public class Main extends JavaPlugin{
 	public void onEnable() {
 	    if (!setupEconomy()) {
 	        getPluginLoader().disablePlugin(this);
-	        getServer().getConsoleSender().sendMessage(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+	        getServer().getConsoleSender().sendMessage(String.format(ChatColor.RED + "[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
 	    }
 		
 		// Loads configs
 		configs = new ConfigManager(this);
 		configs.loadConfig("pricing");
 		configs.loadConfig("generators");
+		
+		if (!getConfig("pricing").contains("level1")) {
+	        getPluginLoader().disablePlugin(this);
+	        getServer().getConsoleSender().sendMessage(ChatColor.RED + "GeneratorPlugin disabled because pricing.yml does not contain the field level1");
+	    }
 		
 		generators = new GeneratorManager(this);
 		
@@ -43,7 +48,8 @@ public class Main extends JavaPlugin{
 	
 	@Override
 	public void onDisable() {
-		generators.save();
+		if(generators != null)
+			generators.save();
 		// Sends a confirmation that the plugin has been disabled
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Generator Plugin has been disabled");
 	}

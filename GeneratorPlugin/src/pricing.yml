@@ -1,7 +1,6 @@
 # Use this file to create levels for the generator
 # This file must contain the following:
 
-# maxLevel: <The highest level listed>
 # level1:
 #   price: <The price of base generator>
 #   item: <The name of the Minecraft material to produce>
@@ -14,12 +13,10 @@
 # For a list of items, see https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 # Ensure the item is listed EXACTLY as shown on the above website
 
-# Finally, ensure that maxLevel is set correctly
-# And make sure that each level has the price, item, and time tags defined
+# Finally, make sure that each level has the price, item, and time tags defined
 # Otherwise, your generator will not work, and will error to the Console
 # Have fun!
 
-maxLevel: 3
 level1: 
   price: 100.00
   item: IRON_INGOT

@@ -88,7 +88,6 @@ public class Generator {
 	
 	public void run() {
 		lastRunTime++;
-		System.out.println(lastRunTime);
 		if(lastRunTime >= Main.getConfig("pricing").getInt("level" + level + ".time")) {
 			dropLoc.getWorld().dropItemNaturally(dropLoc, new ItemStack(material, 1)).setVelocity(new Vector());
 			lastRunTime = 0;
