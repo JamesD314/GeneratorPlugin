@@ -30,8 +30,8 @@ public class Events implements Listener{
 		if(e.getItemInHand().hasItemMeta() && e.getItemInHand().getItemMeta().hasLore()) {
 			List<String> lore = e.getItemInHand().getItemMeta().getLore();
 			if(ChatColor.stripColor(lore.get(0)).contains("Generator")) {
-				Main.getGeneratorManger().add(e.getBlock().getLocation(), e.getPlayer().getFacing().getOppositeFace().getDirection(),
-						Integer.parseInt(ChatColor.stripColor(lore.get(0).split(" ")[1])));
+				Location dropLoc = e.getPlayer().getFacing().getOppositeFace().getDirection().toLocation(e.getBlock().getWorld()).add(e.getBlock().getLocation());
+				Main.getGeneratorManger().add(e.getBlock().getLocation(), dropLoc, Integer.parseInt(ChatColor.stripColor(lore.get(0).split(" ")[1])), 0);
 			}
 		}
 	}

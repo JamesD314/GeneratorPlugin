@@ -43,7 +43,6 @@ public class Main extends JavaPlugin{
 	
 	@Override
 	public void onDisable() {
-		generators.stopRunnable();
 		generators.save();
 		// Sends a confirmation that the plugin has been disabled
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Generator Plugin has been disabled");
@@ -77,6 +76,6 @@ public class Main extends JavaPlugin{
 	
 	public static void reloadConfigs() {
 		configs.reloadConfigs();
-		Main.getGeneratorManger().reload();
+		generators.reload();
 	}
 }

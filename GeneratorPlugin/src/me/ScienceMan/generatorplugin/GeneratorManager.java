@@ -2,6 +2,7 @@ package me.ScienceMan.generatorplugin;
 
 import java.util.ArrayList;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -25,12 +26,15 @@ public class GeneratorManager{
 	
 	public GeneratorManager(Main plugin) {
 		this.plugin = plugin;
+		
 		loadGenerators();
+
 		runnable = new BukkitRunnable() {
 			@Override
 			public void run() {
-				for(int i = 0; i < generators.size(); i++)
+				for(int i = 0; i < Main.getGeneratorManger().getGenerators().size(); i++) {
 					((Generator)generators.get(i).getBlock().getMetadata("generator").get(0).value()).run();
+				}
 			}
 		}.runTaskTimer(plugin, 40, 20);
 	}
@@ -44,9 +48,10 @@ public class GeneratorManager{
 		return null;
 	}
 	
-	public void add(Location l, Vector v, int level) {
-		Location newL = new Location(l.getWorld(), l.getX() + v.getX(), l.getY(), l.getZ() + v.getZ());
-		Generator g = new Generator(plugin, newL, level, 0);
+	public void add(Location l, Location dropLocation, int level, int lastRunTime) {
+		if(level > Generator.getMaxLevel())
+			level = Generator.getMaxLevel();
+		Generator g = new Generator(plugin, dropLocation, level, lastRunTime);
 		l.getBlock().setMetadata("generator", new FixedMetadataValue(plugin, g));
 		generators.add(l);
 	}
@@ -73,6 +78,7 @@ public class GeneratorManager{
 		Main.getConfig("generators").createSection("generators");
 		for(int i = 0; i < generators.size(); i++){
 			Location l = generators.get(i);
+			Generator g = (Generator)l.getBlock().getMetadata("generator").get(0).value();
 			String s = "generators.generator" + i;
 			Main.getConfig("generators").createSection(s);
 			Main.getConfig("generators").createSection(s + ".world");
@@ -84,17 +90,16 @@ public class GeneratorManager{
 			Main.getConfig("generators").createSection(s + ".z");
 			Main.getConfig("generators").set(s + ".z", l.getZ());
 			Main.getConfig("generators").createSection(s + ".dx");
-			Main.getConfig("generators").set(s + ".dx", l.getDirection().getX());
-			Main.getConfig("generators").createSection(s + ".dy");
-			Main.getConfig("generators").set(s + ".dy", l.getDirection().getY());
+			Main.getConfig("generators").set(s + ".dx", g.getDropLocation().getX());
 			Main.getConfig("generators").createSection(s + ".dz");
-			Main.getConfig("generators").set(s + ".dz", l.getDirection().getZ());
+			Main.getConfig("generators").set(s + ".dz", g.getDropLocation().getZ());
 			Main.getConfig("generators").createSection(s + ".level");
-			Main.getConfig("generators").set(s + ".level", ((Generator)(l.getBlock().getMetadata("generator").get(0).value())).getLevel());
+			Main.getConfig("generators").set(s + ".level", g.getLevel());
 			Main.getConfig("generators").createSection(s + ".lastRunTime");
-			Main.getConfig("generators").set(s + ".level", ((Generator)(l.getBlock().getMetadata("generator").get(0).value())).getLastRunTime());
+			Main.getConfig("generators").set(s + ".lastRunTime", g.getLastRunTime());
 		}
 		Main.saveConfig("generators");
+		
 	}
 	
 	private void loadGenerators() {
@@ -105,7 +110,7 @@ public class GeneratorManager{
 			String key = "generators.generator" + i;
 			while(c.contains(key)) {
 				Location l = new Location(plugin.getServer().getWorld(c.getString(key + ".world")), c.getDouble(key + ".x"), c.getDouble(key + ".y"), c.getDouble(key + ".z"));
-				add(l, new Vector(c.getDouble(key + ".dx"), c.getDouble(key + ".dy"), c.getDouble(key + ".dz")), c.getInt("generators.generator" + i + ".level"));
+				add(l, new Location(l.getWorld(), c.getDouble(key + ".dx"), l.getY(), c.getDouble(key + ".dz")), c.getInt("generators.generator" + i + ".level"), c.getInt("generators.generator" + i + ".lastRunTime"));
 				i++;
 				key = "generators.generator" + i;
 			}
@@ -127,9 +132,5 @@ public class GeneratorManager{
 		}
 		save();
 		loadGenerators();
-	}
-	
-	public void stopRunnable() {
-		runnable.cancel();
 	}
 }

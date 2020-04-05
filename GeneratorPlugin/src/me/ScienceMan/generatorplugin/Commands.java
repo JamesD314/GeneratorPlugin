@@ -1,5 +1,7 @@
 package me.ScienceMan.generatorplugin;
 
+import java.text.DecimalFormat;
+
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,10 +28,10 @@ public class Commands implements Listener, CommandExecutor{
 							ItemStack generator = new ItemStack(Material.FURNACE, 1);
 							generator.setItemMeta(Generator.getMeta(1));
 							player.getInventory().addItem(generator);
-							player.sendMessage(ChatColor.GREEN + "Congratulation on purchasing a new Generator!");
+							player.sendMessage(ChatColor.GREEN + "Congratulations on purchasing a new Generator!");
 						}
 						else {
-							player.sendMessage(ChatColor.RED + "Sorry, but you do not have sufficient funds to purchase a generator. It costs: " + price);
+							player.sendMessage(ChatColor.RED + "Sorry, but you do not have sufficient funds to purchase a generator. It costs: " + (new DecimalFormat("0.00")).format(price));
 						}
 					}
 					else {

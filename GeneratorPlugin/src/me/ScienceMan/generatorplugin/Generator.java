@@ -28,7 +28,7 @@ public class Generator {
 		this.level = level;
 		dropLoc = l;
 		this.lastRunTime = lastRunTime;
-		material = Material.valueOf(Main.getConfig("pricing").getString("level" + this.level + ".item"));
+		material = Material.valueOf(Main.getConfig("pricing").getString("level" + this.level + ".item").toUpperCase());
 		updateInventory();
 	}
 	
@@ -36,7 +36,7 @@ public class Generator {
 		ItemMeta meta = (new ItemStack(Material.FURNACE,1)).getItemMeta();
 		meta.setDisplayName(ChatColor.DARK_AQUA + "Generator");
 		String materialString = "";
-		for(String s : Main.getConfig("pricing").getString("level" + l + ".item").split("_")) {
+		for(String s : Main.getConfig("pricing").getString("level" + l + ".item").toUpperCase().split("_")) {
 			materialString += s.charAt(0);
 			materialString += s.substring(1).toLowerCase();
 			materialString += " ";
@@ -60,11 +60,11 @@ public class Generator {
 		currentIs.setItemMeta(getMeta(level));
 		
 		if(canLevelUp()) {
-			ItemStack upgradeIs = new ItemStack(Material.valueOf(Main.getConfig("pricing").getString("level"+ (level + 1) + ".item")), 1);
+			ItemStack upgradeIs = new ItemStack(Material.valueOf(Main.getConfig("pricing").getString("level"+ (level + 1) + ".item").toUpperCase()), 1);
 			ItemMeta upgradeMeta = upgradeIs.getItemMeta();
 			upgradeMeta.setDisplayName(ChatColor.DARK_AQUA + "Upgrade Generator");
 			String materialString = "";
-			for(String s : Main.getConfig("pricing").getString("level" + (level+1) + ".item").split("_")) {
+			for(String s : Main.getConfig("pricing").getString("level" + (level+1) + ".item").toUpperCase().split("_")) {
 				materialString += s.charAt(0);
 				materialString += s.substring(1).toLowerCase();
 				materialString += " ";
@@ -88,6 +88,7 @@ public class Generator {
 	
 	public void run() {
 		lastRunTime++;
+		System.out.println(lastRunTime);
 		if(lastRunTime >= Main.getConfig("pricing").getInt("level" + level + ".time")) {
 			dropLoc.getWorld().dropItemNaturally(dropLoc, new ItemStack(material, 1)).setVelocity(new Vector());
 			lastRunTime = 0;
@@ -106,8 +107,16 @@ public class Generator {
 		return level;
 	}
 	
+	public static int getMaxLevel() {
+		int i = 1;
+		while(Main.getConfig("pricing").contains("level"+i))
+			i++;
+		i--;
+		return i;
+	}
+	
 	public boolean canLevelUp() {
-		return level < Main.getConfig("pricing").getInt("maxLevel");
+		return level < getMaxLevel();
 	}
 	
 	public double getLevelUpCost() {
@@ -120,7 +129,7 @@ public class Generator {
 	
 	public void levelUp() {
 		level++;
-		material = Material.valueOf(Main.getConfig("pricing").getString("level" + level + ".item"));
+		material = Material.valueOf(Main.getConfig("pricing").getString("level" + level + ".item").toUpperCase());
 		updateInventory();
 	}
 	
@@ -128,4 +137,7 @@ public class Generator {
 		return inventory;
 	}
 	
+	public Location getDropLocation() {
+		return dropLoc;
+	}
 }
