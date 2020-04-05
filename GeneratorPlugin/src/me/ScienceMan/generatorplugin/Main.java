@@ -60,7 +60,6 @@ public class Main extends JavaPlugin{
         if (economyProvider != null) {
             economy = economyProvider.getProvider();
         }
-
         return (economy != null);
     }
 	

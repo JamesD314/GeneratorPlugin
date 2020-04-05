@@ -1,0 +1,31 @@
+# Use this file to create levels for the generator
+# This file must contain the following:
+
+# level1:
+#   price: <The price of base generator>
+#   item: <The name of the Minecraft material to produce>
+#   time: <The time it takes to produce the material in seconds>
+
+# To add more than the base upgrade, copy and paste the level1 definition
+# Simply change it to say "level2", "level3", "level4", and so on
+# Do not skip numbers, and do not start at 0
+# Change the price, item, and time tags to the value you wish
+# For a list of items, see https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+# Ensure the item is listed EXACTLY as shown on the above website
+
+# Finally, make sure that each level has the price, item, and time tags defined
+# Otherwise, your generator will not work, and will error to the Console
+# Have fun!
+
+level1: 
+  price: 100.00
+  item: IRON_INGOT
+  time: 10
+level2:
+  price: 200.00
+  item: GOLD_INGOT
+  time: 10
+level3:
+  price: 300.00
+  item: DIAMOND
+  time: 10

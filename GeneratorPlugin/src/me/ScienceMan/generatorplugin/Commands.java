@@ -49,8 +49,13 @@ public class Commands implements Listener, CommandExecutor{
 			}
 		}
 		else if(cmd.getName().equalsIgnoreCase(commands[1])) {
-			Main.reloadConfigs();
-			sender.sendMessage(ChatColor.GREEN + "Reloaded Configs");
+			if(sender.hasPermission("generator.reload")) {
+				Main.reloadConfigs();
+				sender.sendMessage(ChatColor.GREEN + "Reloaded Configs");
+			}
+			else {
+				sender.sendMessage(ChatColor.RED + "You do not have permission to run this command");;
+			}
 		}
 		return true;
 	}
