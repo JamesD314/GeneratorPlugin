@@ -32,8 +32,13 @@ public class GeneratorManager{
 		runnable = new BukkitRunnable() {
 			@Override
 			public void run() {
-				for(int i = 0; i < Main.getGeneratorManger().getGenerators().size(); i++) {
-					((Generator)generators.get(i).getBlock().getMetadata("generator").get(0).value()).run();
+				for(int i = 0; i < generators.size(); i++) {
+					if(generators.get(i).getBlock().getType().equals(Material.FURNACE))
+						((Generator)generators.get(i).getBlock().getMetadata("generator").get(0).value()).run();
+					else {
+						generators.remove(i);
+						i--;
+					}
 				}
 			}
 		}.runTaskTimer(plugin, 40, 20);

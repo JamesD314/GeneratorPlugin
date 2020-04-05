@@ -119,7 +119,7 @@ public class Generator {
 	}
 	
 	public double getLevelUpCost() {
-		return Main.getConfig("pricing").getDouble("level" + (level+1));
+		return Main.getConfig("pricing").getDouble("level" + (level+1) + ".price");
 	}
 	
 	public void openUpgradeMenu(Player player) {

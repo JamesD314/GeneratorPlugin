@@ -80,6 +80,7 @@ public class Events implements Listener{
 							l.getBlock().setMetadata("generator", new FixedMetadataValue(plugin, g));
 							p.closeInventory();
 							p.sendMessage(ChatColor.GREEN + "Successfully upgraded your generator");
+							Main.getEconomy().withdrawPlayer(p, g.getLevelUpCost());
 						}
 						else {
 							p.closeInventory();
