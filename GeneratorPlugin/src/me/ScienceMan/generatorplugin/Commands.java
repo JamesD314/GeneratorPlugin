@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import net.md_5.bungee.api.ChatColor;
 
 public class Commands implements Listener, CommandExecutor{
-	public final String[] commands = {"buygenerator", "reloadgenerators"};
+	public final String[] commands = {"buygenerator", "reloadgenerators", "generatorinfo"};
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -54,7 +54,24 @@ public class Commands implements Listener, CommandExecutor{
 				sender.sendMessage(ChatColor.GREEN + "Reloaded Configs");
 			}
 			else {
-				sender.sendMessage(ChatColor.RED + "You do not have permission to run this command");;
+				sender.sendMessage(ChatColor.RED + "You do not have permission to run this command");
+				return false;
+			}
+		}
+		else if(cmd.getName().equalsIgnoreCase(commands[2])) {
+			if(sender.hasPermission("generator.info")) {
+				String msg = "";
+				for(int i = 1; i <= Generator.getMaxLevel(); i++) {
+					msg += 	"Level " + ChatColor.GOLD + "" + i + ChatColor.WHITE + ":\n" +
+							"    Price: " + ChatColor.GREEN + "$" + (new DecimalFormat("0.00")).format(Main.getConfig("pricing").getDouble("level"+i+".price")) + ChatColor.WHITE + "\n" +
+							"    Item: " + ChatColor.GOLD + Main.getConfig("pricing").getString("level"+i+".item").replace("_", " ") + ChatColor.WHITE + "\n" +
+							"    Time: " + ChatColor.GOLD + Main.getConfig("pricing").getString("level"+i+".time") + ChatColor.WHITE + "\n";
+				}
+				sender.sendMessage(msg.substring(0, msg.length() - 1));
+			}
+			else {
+				sender.sendMessage(ChatColor.RED + "You do not have permission to run this command");
+				return false;
 			}
 		}
 		return true;

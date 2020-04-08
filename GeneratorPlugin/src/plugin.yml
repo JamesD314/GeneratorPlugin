@@ -13,3 +13,6 @@ commands:
   reloadgenerators:
     usage: /<command>
     description: Reloads the configs and generators
+  generatorinfo:
+    usage: /<command>
+    description: Gets the generator pricing info
